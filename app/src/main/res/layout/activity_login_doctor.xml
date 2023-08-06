@@ -1,4 +1,3 @@
-<!-- activity_login_doctor.xml -->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -12,7 +11,7 @@
         android:text="Iniciar sesión como Doctor"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal" />
 
     <EditText
         android:id="@+id/etEmailDoctor"
@@ -26,8 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Contraseña"
-        android:inputType="textPassword"
-       />
+        android:inputType="textPassword" />
 
     <CheckBox
         android:id="@+id/chkShowPasswordDoctor"
@@ -39,9 +37,20 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:text="Iniciar Sesión"
-        android:onClick="loginDoctor" />
+        android:onClick="loginDoctor"
+        android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:id="@+id/tvRegisterLinkDoctor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="8dp"
+        android:text="¿No te has registrado aún? Regístrate aquí"
+        android:textSize="14sp"
+        android:textColor="#0000FF"
+        android:onClick="goToDoctorRegister" />
 
     <ImageButton
         android:id="@+id/btnBack"
