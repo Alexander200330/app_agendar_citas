@@ -1,6 +1,4 @@
-<!-- activity_register_doctor.xml -->
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -9,67 +7,73 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Llenar todos los campos del doctor"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         android:text="Registro de Doctor"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_gravity="center_horizontal" />
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/etDoctorName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nombre"
-        android:inputType="text" />
+        android:hint="Nombre" />
 
     <EditText
         android:id="@+id/etDoctorEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Correo electrónico"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/etDoctorAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dirección"
-        android:inputType="text" />
-
-    <EditText
-        android:id="@+id/etDoctorPhoneNumber"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Número de teléfono"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/etDoctorPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contraseña"
-        android:inputType="textPassword" />
+        android:inputType="textEmailAddress"
+        android:hint="Correo Electrónico" />
 
     <EditText
         android:id="@+id/etDoctorSpeciality"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Especialidad"
-        android:inputType="text" />
+        android:hint="Especialidad" />
+
+    <EditText
+        android:id="@+id/etDoctorPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Contraseña" />
+
+    <EditText
+        android:id="@+id/etDoctorAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Dirección" />
+
+    <EditText
+        android:id="@+id/etDoctorPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="Número de Teléfono" />
+
+    <EditText
+        android:id="@+id/etDoctorBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="none"
+        android:hint="Fecha de Cumpleaños (AAAA-MM-DD)"
+        android:focusable="false"
+        android:clickable="true" />
+
+    <Spinner
+        android:id="@+id/spDoctorSex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/sex_options"
+        android:prompt="@string/sex_prompt"
+        android:spinnerMode="dropdown"
+        android:layout_marginTop="8dp" />
 
     <Button
-        android:id="@+id/btnRegisterDoctor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="Registrarse"
-        android:onClick="registerDoctor" />
+        android:onClick="createDoctor"
+        android:text="Registrar Doctor" />
 
 </LinearLayout>

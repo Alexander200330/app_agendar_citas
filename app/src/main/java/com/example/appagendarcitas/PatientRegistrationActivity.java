@@ -1,9 +1,12 @@
 package com.example.appagendarcitas;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -15,50 +18,72 @@ public class PatientRegistrationActivity extends AppCompatActivity {
     private EditText etPatientEmail;
     private EditText etPatientAddress;
     private EditText etPatientPhone;
-    private EditText etPatientBirthday;
+    private EditText etPatientBirthday; // Nuevo campo para fecha de cumpleaños
     private EditText etPatientWeight;
     private EditText etPatientHeight;
     private EditText etPatientBlood;
     private EditText etPatientPassword;
+    private EditText etPatientSex; // Nuevo campo para sexo
+
+    private AppointmentsDataSource dataSource;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_registration);
 
-        etPatientName = findViewById(R.id.et_patient_name);
-        etPatientEmail = findViewById(R.id.et_patient_email);
-        etPatientAddress = findViewById(R.id.et_patient_address);
-        etPatientPhone = findViewById(R.id.et_patient_phone);
-        etPatientBirthday = findViewById(R.id.et_patient_birthday);
-        etPatientWeight = findViewById(R.id.et_patient_weight);
-        etPatientHeight = findViewById(R.id.et_patient_height);
-        etPatientBlood = findViewById(R.id.et_patient_blood);
-        etPatientPassword = findViewById(R.id.et_patient_password);
+        etPatientName = findViewById(R.id.etPatientName);
+        etPatientEmail = findViewById(R.id.etPatientEmail);
+        etPatientAddress = findViewById(R.id.etPatientAddress);
+        etPatientPhone = findViewById(R.id.etPatientPhoneNumber);
+        etPatientBirthday = findViewById(R.id.etPatientBirthday);
+        etPatientWeight = findViewById(R.id.etPatientWeight);
+        etPatientHeight = findViewById(R.id.etPatientHeight);
+        etPatientBlood = findViewById(R.id.etPatientBlood);
+        etPatientPassword = findViewById(R.id.etPatientPassword);
+        etPatientSex = findViewById(R.id.etPatientSex);
+
+        dataSource = new AppointmentsDataSource(this);
     }
 
-    public void registerPatient(View view) {
+    public void createPatient(View view) {
         String name = etPatientName.getText().toString();
         String email = etPatientEmail.getText().toString();
         String address = etPatientAddress.getText().toString();
-        String phone = etPatientPhone.getText().toString();
-        String birthday = etPatientBirthday.getText().toString();
+        String phoneNumber = etPatientPhone.getText().toString();
+        String birthday = etPatientBirthday.getText().toString(); // Nuevo campo para fecha de cumpleaños
         double weight = Double.parseDouble(etPatientWeight.getText().toString());
         double height = Double.parseDouble(etPatientHeight.getText().toString());
         String blood = etPatientBlood.getText().toString();
         String password = etPatientPassword.getText().toString();
+        String sex = etPatientSex.getText().toString(); // Nuevo campo para sexo
 
-        Patient patient = new Patient(name, email, address, phone, password, birthday, weight, height, blood);
-        // Guardar el paciente en la base de datos
-        AppointmentsDataSource dataSource = new AppointmentsDataSource(this);
-        dataSource.open();
-        dataSource.insertPatient(patient);
-        dataSource.close();
+        if (name.isEmpty() || email.isEmpty() || address.isEmpty() || phoneNumber.isEmpty() ||
+                birthday.isEmpty() || blood.isEmpty() || password.isEmpty() || sex.isEmpty()) {
+            Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_LONG).show();
+        } else {
+            Patient newPatient = new Patient(name, email, address, phoneNumber, password, birthday, sex, weight, height, blood);
 
-        // Llevar al usuario a otra ventana con el mensaje de bienvenida
-        String welcomeMessage = "Bienvenido " + name;
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        intent.putExtra("message", welcomeMessage);
-        startActivity(intent);
+            dataSource.open();
+            long insertId = dataSource.insertPatient(newPatient);
+            dataSource.close();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Patient Registration");
+            if (insertId != -1) {
+                builder.setMessage("Patient registered successfully with ID: " + insertId);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(PatientRegistrationActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                builder.setMessage("Error registering patient.");
+                builder.setPositiveButton("OK", null);
+            }
+            builder.show();
+        }
     }
 }

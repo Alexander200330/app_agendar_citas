@@ -9,8 +9,8 @@ public class Doctor extends User {
     private String speciality;
     private List<AvailableAppointment> availableAppointments;
 
-    public Doctor(String name, String email, String address, String phoneNumber, String password, String speciality) {
-        super(name, email, address, phoneNumber, password);
+    public Doctor(String name, String email, String speciality, String password, String address, String phoneNumber, String birthday, String sex) {
+        super(name, email, address, phoneNumber, password, birthday, sex);
         this.speciality = speciality;
         this.availableAppointments = new ArrayList<>();
     }

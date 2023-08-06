@@ -1,76 +1,90 @@
-<!-- res/layout/activity_register_patient.xml -->
-
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <EditText
-        android:id="@+id/et_patient_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Nombre del paciente" />
-
-    <EditText
-        android:id="@+id/et_patient_email"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Correo electrónico del paciente"
-        android:inputType="textEmailAddress" />
-
-    <EditText
-        android:id="@+id/et_patient_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Dirección del paciente" />
-
-    <EditText
-        android:id="@+id/et_patient_phone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Número de teléfono del paciente"
-        android:inputType="phone" />
-
-    <EditText
-        android:id="@+id/et_patient_birthday"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Fecha de nacimiento del paciente"
-        android:inputType="date" />
-
-    <EditText
-        android:id="@+id/et_patient_weight"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Peso del paciente"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/et_patient_height"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Altura del paciente"
-        android:inputType="numberDecimal" />
-
-    <EditText
-        android:id="@+id/et_patient_blood"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Tipo de sangre del paciente" />
-
-    <EditText
-        android:id="@+id/et_patient_password"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Contraseña del paciente"
-        android:inputType="textPassword" />
-
-    <Button
-        android:id="@+id/btn_register_patient"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar paciente" />
+        android:layout_gravity="center_horizontal"
+        android:text="Patient Registration"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/etPatientName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/etPatientEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/etPatientAddress"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Address" />
+
+    <EditText
+        android:id="@+id/etPatientPhoneNumber"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:hint="Phone Number" />
+
+    <EditText
+        android:id="@+id/etPatientBirthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:hint="Birthday (YYYY-MM-DD)" />
+
+    <EditText
+        android:id="@+id/etPatientWeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Weight (kg)" />
+
+    <EditText
+        android:id="@+id/etPatientHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        android:hint="Height (cm)" />
+
+    <EditText
+        android:id="@+id/etPatientBlood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Blood Type" />
+
+    <EditText
+        android:id="@+id/etPatientPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="Password" />
+
+    <EditText
+        android:id="@+id/etPatientSex"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="text"
+        android:hint="Sex" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:onClick="createPatient"
+        android:text="Create Patient" />
 
 </LinearLayout>

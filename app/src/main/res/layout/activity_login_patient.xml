@@ -52,12 +52,4 @@
         android:textColor="#0000FF"
         android:onClick="goToPatientRegister" />
 
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/volver"
-        android:layout_gravity="bottom|end"
-        android:onClick="goBackToMenu" />
-
 </LinearLayout>

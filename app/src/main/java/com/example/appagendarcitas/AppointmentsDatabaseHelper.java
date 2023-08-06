@@ -22,9 +22,10 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_SPECIALITY = "speciality";
     public static final String COLUMN_ADDRESS = "address"; // Nuevo campo para la dirección
     public static final String COLUMN_PHONE_NUMBER = "phone_number"; // Nuevo campo para el número de teléfono
+    public static final String COLUMN_BIRTHDAY = "birthday"; // Nuevo campo para la fecha de cumpleaños
+    public static final String COLUMN_SEX = "sex"; // Nuevo campo para el sexo
 
     // Patient table specific column names
-    public static final String COLUMN_BIRTHDAY = "birthday";
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_HEIGHT = "height";
     public static final String COLUMN_BLOOD = "blood";
@@ -38,9 +39,10 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_SPECIALITY + " TEXT, " +
                     COLUMN_PASSWORD + " TEXT, " +
                     COLUMN_ADDRESS + " TEXT, " +
-                    COLUMN_PHONE_NUMBER + " TEXT" +
+                    COLUMN_PHONE_NUMBER + " TEXT, " +
+                    COLUMN_BIRTHDAY + " TEXT, " +
+                    COLUMN_SEX + " TEXT" +
                     ");";
-
     private static final String CREATE_TABLE_PATIENTS =
             "CREATE TABLE " + TABLE_PATIENTS + "(" +
                     COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +

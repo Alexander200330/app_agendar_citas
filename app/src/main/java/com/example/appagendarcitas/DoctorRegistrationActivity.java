@@ -1,17 +1,24 @@
 package com.example.appagendarcitas;
 
-import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.SQLException;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.appagendarcitas.AppointmentsDataSource;
 import com.example.appagendarcitas.model.Doctor;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class DoctorRegistrationActivity extends AppCompatActivity {
 
@@ -21,6 +28,8 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
     private EditText etDoctorPassword;
     private EditText etDoctorAddress;
     private EditText etDoctorPhoneNumber;
+    private EditText etDoctorBirthday;
+    private Spinner spDoctorSex;
 
     private AppointmentsDataSource dataSource;
 
@@ -35,51 +44,74 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
         etDoctorPassword = findViewById(R.id.etDoctorPassword);
         etDoctorAddress = findViewById(R.id.etDoctorAddress);
         etDoctorPhoneNumber = findViewById(R.id.etDoctorPhoneNumber);
+        etDoctorBirthday = findViewById(R.id.etDoctorBirthday);
+        spDoctorSex = findViewById(R.id.spDoctorSex);
 
         dataSource = new AppointmentsDataSource(this);
-        dataSource.open();
-    }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        dataSource.close();
-    }
-
-    public void registerDoctor(View view) {
-        String name = etDoctorName.getText().toString().trim();
-        String email = etDoctorEmail.getText().toString().trim();
-        String address = etDoctorAddress.getText().toString().trim();
-        String phoneNumber = etDoctorPhoneNumber.getText().toString().trim();
-        String password = etDoctorPassword.getText().toString(); // Obtener el password sin hash
-        String speciality = etDoctorSpeciality.getText().toString().trim();
-
-        if (name.isEmpty() || email.isEmpty() || address.isEmpty() || phoneNumber.isEmpty() || password.isEmpty() || speciality.isEmpty()) {
-            showToast("Todos los campos son obligatorios.");
-        } else {
-            Doctor doctor = new Doctor(name, email, address, phoneNumber, password, speciality); // Pasar el password sin hash
-            try {
-                long id = dataSource.insertDoctor(doctor);
-                if (id != -1) {
-                    showToast("Registro Exitoso. ¡El registro se ha completado con éxito!");
-                    navigateToLoginActivity();
-                } else {
-                    showToast("Error. No se pudo completar el registro. Intente nuevamente.");
-                }
-            } catch (Exception e) {
-                showToast("Error. " + e.getMessage() + ". Intente nuevamente.");
-                e.printStackTrace();
+        etDoctorBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
+        });
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(year, month, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                String selectedDate = sdf.format(calendar.getTime());
+                etDoctorBirthday.setText(selectedDate);
+            }
+        }, year, month, dayOfMonth);
+
+        datePickerDialog.show();
+    }
+
+    public void createDoctor(View view) {
+        String name = etDoctorName.getText().toString();
+        String email = etDoctorEmail.getText().toString();
+        String speciality = etDoctorSpeciality.getText().toString();
+        String password = etDoctorPassword.getText().toString();
+        String address = etDoctorAddress.getText().toString();
+        String phoneNumber = etDoctorPhoneNumber.getText().toString();
+        String birthday = etDoctorBirthday.getText().toString();
+        String sex = spDoctorSex.getSelectedItem().toString();
+
+        if (name.isEmpty() || email.isEmpty() || speciality.isEmpty() || password.isEmpty() ||
+                address.isEmpty() || phoneNumber.isEmpty() || birthday.isEmpty() || sex.isEmpty()) {
+            Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_LONG).show();
+        } else {
+            Doctor newDoctor = new Doctor(name, email, speciality, password, address, phoneNumber, birthday, sex);
+
+            dataSource.open();
+            long insertId = dataSource.insertDoctor(newDoctor);
+            dataSource.close();
+
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Registro de Doctor");
+            if (insertId != -1) {
+                builder.setMessage("Doctor registrado con éxito con ID: " + insertId);
+                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(DoctorRegistrationActivity.this, MainActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            } else {
+                builder.setMessage("Error al registrar el doctor.");
+                builder.setPositiveButton("OK", null);
+            }
+            builder.show();
         }
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private void navigateToLoginActivity() {
-        Intent intent = new Intent(this, WelcomeActivity.class);
-        startActivity(intent);
-        finish();
     }
 }
