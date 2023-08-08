@@ -1,16 +1,23 @@
 package com.example.appagendarcitas;
 
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appagendarcitas.model.Patient;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 public class PatientRegistrationActivity extends AppCompatActivity {
 
@@ -23,7 +30,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
     private EditText etPatientHeight;
     private EditText etPatientBlood;
     private EditText etPatientPassword;
-    private EditText etPatientSex; // Nuevo campo para sexo
+    private Spinner spPatientSex;
 
     private AppointmentsDataSource dataSource;
 
@@ -41,9 +48,35 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         etPatientHeight = findViewById(R.id.etPatientHeight);
         etPatientBlood = findViewById(R.id.etPatientBlood);
         etPatientPassword = findViewById(R.id.etPatientPassword);
-        etPatientSex = findViewById(R.id.etPatientSex);
+        spPatientSex = findViewById(R.id.spPatientSex); // Cambiado a Spinner
 
         dataSource = new AppointmentsDataSource(this);
+
+        etPatientBirthday.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
+            }
+        });
+    }
+
+    private void showDatePickerDialog() {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(year, month, dayOfMonth);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+                String selectedDate = sdf.format(calendar.getTime());
+                etPatientBirthday.setText(selectedDate);
+            }
+        }, year, month, dayOfMonth);
+
+        datePickerDialog.show();
     }
 
     public void createPatient(View view) {
@@ -52,26 +85,27 @@ public class PatientRegistrationActivity extends AppCompatActivity {
         String address = etPatientAddress.getText().toString();
         String phoneNumber = etPatientPhone.getText().toString();
         String birthday = etPatientBirthday.getText().toString(); // Nuevo campo para fecha de cumpleaños
-        double weight = Double.parseDouble(etPatientWeight.getText().toString());
-        double height = Double.parseDouble(etPatientHeight.getText().toString());
+        String weightStr = etPatientWeight.getText().toString();
+        String heightStr = etPatientHeight.getText().toString();
         String blood = etPatientBlood.getText().toString();
         String password = etPatientPassword.getText().toString();
-        String sex = etPatientSex.getText().toString(); // Nuevo campo para sexo
+        String sex = spPatientSex.getSelectedItem().toString();
 
         if (name.isEmpty() || email.isEmpty() || address.isEmpty() || phoneNumber.isEmpty() ||
-                birthday.isEmpty() || blood.isEmpty() || password.isEmpty() || sex.isEmpty()) {
-            Toast.makeText(this, "Please fill all the fields.", Toast.LENGTH_LONG).show();
+                birthday.isEmpty() || weightStr.isEmpty() || heightStr.isEmpty() ||
+                blood.isEmpty() || password.isEmpty() || sex.isEmpty()) {
+            Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_LONG).show();
         } else {
-            Patient newPatient = new Patient(name, email, address, phoneNumber, password, birthday, sex, weight, height, blood);
+            Patient newPatient = new Patient(name, email, address, phoneNumber, password, birthday, sex, weightStr, heightStr, blood);
 
             dataSource.open();
             long insertId = dataSource.insertPatient(newPatient);
             dataSource.close();
 
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setTitle("Patient Registration");
+            builder.setTitle("Registro de Paciente");
             if (insertId != -1) {
-                builder.setMessage("Patient registered successfully with ID: " + insertId);
+                builder.setMessage("Paciente registrado exitosamente con ID: " + insertId);
                 builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -80,7 +114,7 @@ public class PatientRegistrationActivity extends AppCompatActivity {
                     }
                 });
             } else {
-                builder.setMessage("Error registering patient.");
+                builder.setMessage("Error al registrar el paciente.");
                 builder.setPositiveButton("OK", null);
             }
             builder.show();

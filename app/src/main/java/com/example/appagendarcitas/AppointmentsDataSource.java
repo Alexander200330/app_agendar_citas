@@ -51,8 +51,8 @@ public class AppointmentsDataSource {
         values.put(AppointmentsDatabaseHelper.COLUMN_NAME, patient.getName());
         values.put(AppointmentsDatabaseHelper.COLUMN_EMAIL, patient.getEmail());
         values.put(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY, patient.getBirthday());
-        values.put(AppointmentsDatabaseHelper.COLUMN_WEIGHT, patient.getWeight());
-        values.put(AppointmentsDatabaseHelper.COLUMN_HEIGHT, patient.getHeight());
+        values.put(AppointmentsDatabaseHelper.COLUMN_WEIGHT, patient.getWeight() + " kg");
+        values.put(AppointmentsDatabaseHelper.COLUMN_HEIGHT, patient.getHeight() + " cm");
         values.put(AppointmentsDatabaseHelper.COLUMN_BLOOD, patient.getBlood());
         values.put(AppointmentsDatabaseHelper.COLUMN_PASSWORD, patient.getPassword());
         values.put(AppointmentsDatabaseHelper.COLUMN_ADDRESS, patient.getAddress());
@@ -99,7 +99,6 @@ public class AppointmentsDataSource {
 
     // Convertir el cursor de la tabla de doctores en un objeto Doctor
     private Doctor cursorToDoctor(Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID);
         int nameIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_NAME);
         int emailIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_EMAIL);
         int specialityIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_SPECIALITY);
@@ -109,7 +108,6 @@ public class AppointmentsDataSource {
         int birthdayIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY);
         int sexIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_SEX);
 
-        int id = cursor.getInt(idIndex);
         String name = cursor.getString(nameIndex);
         String email = cursor.getString(emailIndex);
         String speciality = cursor.getString(specialityIndex);
@@ -126,7 +124,6 @@ public class AppointmentsDataSource {
 
     // Convertir el cursor de la tabla de pacientes en un objeto Patient
     private Patient cursorToPatient(Cursor cursor) {
-        int idIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID);
         int nameIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_NAME);
         int emailIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_EMAIL);
         int birthdayIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY);
@@ -143,8 +140,8 @@ public class AppointmentsDataSource {
         String address = cursor.getString(addressIndex);
         String phoneNumber = cursor.getString(phoneNumberIndex);
         String birthday = cursor.getString(birthdayIndex);
-        double weight = cursor.getDouble(weightIndex);
-        double height = cursor.getDouble(heightIndex);
+        String weight = cursor.getString(weightIndex);
+        String height = cursor.getString(heightIndex);
         String blood = cursor.getString(bloodIndex);
         String password = cursor.getString(passwordIndex);
         String sex = cursor.getString(sexIndex);

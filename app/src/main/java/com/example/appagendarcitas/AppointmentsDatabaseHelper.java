@@ -49,12 +49,13 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_NAME + " TEXT, " +
                     COLUMN_EMAIL + " TEXT, " +
                     COLUMN_BIRTHDAY + " TEXT, " +
-                    COLUMN_WEIGHT + " REAL, " +
-                    COLUMN_HEIGHT + " REAL, " +
+                    COLUMN_WEIGHT + " TEXT, " +
+                    COLUMN_HEIGHT + " TEXT, " +
                     COLUMN_BLOOD + " TEXT, " +
                     COLUMN_PASSWORD + " TEXT, " +
                     COLUMN_ADDRESS + " TEXT, " +
-                    COLUMN_PHONE_NUMBER + " TEXT" +
+                    COLUMN_PHONE_NUMBER + " TEXT, " +
+                    COLUMN_SEX + " TEXT" + // Agregamos la columna para el sexo
                     ");";
 
     public AppointmentsDatabaseHelper(Context context) {
