@@ -1,7 +1,5 @@
 package com.example.appagendarcitas.model;
 
-import com.example.appagendarcitas.User;
-
 import java.util.ArrayList;
 import java.util.List;
 

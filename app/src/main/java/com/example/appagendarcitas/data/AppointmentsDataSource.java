@@ -1,4 +1,4 @@
-package com.example.appagendarcitas;
+package com.example.appagendarcitas.data;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.example.appagendarcitas.data.AppointmentsDatabaseHelper;
 import com.example.appagendarcitas.model.Doctor;
 import com.example.appagendarcitas.model.Patient;
 

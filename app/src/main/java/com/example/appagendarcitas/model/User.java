@@ -1,4 +1,4 @@
-package com.example.appagendarcitas;
+package com.example.appagendarcitas.model;
 
 public abstract class User {
     private String name;

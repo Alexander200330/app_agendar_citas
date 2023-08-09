@@ -6,6 +6,9 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.appagendarcitas.view.DoctorLoginActivity;
+import com.example.appagendarcitas.view.PatientLoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override

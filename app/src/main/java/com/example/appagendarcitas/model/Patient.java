@@ -1,7 +1,5 @@
 package com.example.appagendarcitas.model;
 
-import com.example.appagendarcitas.User;
-
 public class Patient extends User {
 
     private String weight;

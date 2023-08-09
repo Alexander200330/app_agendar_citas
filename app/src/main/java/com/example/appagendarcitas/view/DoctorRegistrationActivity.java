@@ -1,4 +1,4 @@
-package com.example.appagendarcitas;
+package com.example.appagendarcitas.view;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
@@ -13,7 +13,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.appagendarcitas.AppointmentsDataSource;
+import com.example.appagendarcitas.MainActivity;
+import com.example.appagendarcitas.R;
+import com.example.appagendarcitas.data.AppointmentsDataSource;
 import com.example.appagendarcitas.model.Doctor;
 
 import java.text.SimpleDateFormat;
