@@ -33,7 +33,10 @@ public class DoctorMenuActivity extends AppCompatActivity {
 
     private View dialogView;
 
-    int doctorId;
+    String doctorEmail;
+    String doctorPassword;
+
+
 
     private int selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute;
 
@@ -44,11 +47,8 @@ public class DoctorMenuActivity extends AppCompatActivity {
 
         tvProfileDoctor = findViewById(R.id.tvProfileDoctor);
 
-        doctorId = getIntent().getIntExtra("doctorId", -1);
-
-        Log.d("DoctorMenuActivity", "Doctor ID: " + doctorId);
-
-
+        doctorEmail = getIntent().getStringExtra("doctorEmail");
+        doctorPassword = getIntent().getStringExtra("doctorPassword");
 
         // Obtén el nombre del doctor del Intent
         String doctorName = getIntent().getStringExtra("doctorName");
@@ -87,13 +87,20 @@ public class DoctorMenuActivity extends AppCompatActivity {
             String date = etSelectedDate.getText().toString();
             String time = etSelectedTime.getText().toString();
 
+            if (date.isEmpty() || time.isEmpty()) {
+                Toast.makeText(this, "Por favor, selecciona una fecha y hora válidas", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            int doctorId = dataSource.getDoctorIdByEmailAndPassword(doctorEmail, doctorPassword);
+
             // Agrega un log para imprimir el valor del doctorId
 
             AvailableAppointment availableAppointment = new AvailableAppointment(date, time, doctorId);
             long appointmentId = dataSource.insertAvailableAppointment(availableAppointment);
 
             if (appointmentId != -1) {
-                Toast.makeText(this, "Cita disponible guardada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cita disponible guardada ", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Error al guardar la cita disponible", Toast.LENGTH_SHORT).show();
             }

@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar Cita Disponible"
+        android:text="Por favor LLenar todos los campos"
         android:textSize="18sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -30,11 +30,5 @@
         android:focusable="false"
         android:clickable="true"
         android:onClick="showTimePickerDialog" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar"
-        android:onClick="saveAvailableAppointment" />
 
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.appagendarcitas.data;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -65,6 +66,7 @@ public class AppointmentsDataSource {
         return db.insert(AppointmentsDatabaseHelper.TABLE_PATIENTS, null, values);
     }
 
+
     // Obtener todos los doctores de la base de datos
     public List<Doctor> getAllDoctors() {
         List<Doctor> doctors = new ArrayList<>();
@@ -121,9 +123,7 @@ public class AppointmentsDataSource {
         String birthday = cursor.getString(birthdayIndex);
         String sex = cursor.getString(sexIndex);
 
-        Doctor doctor = new Doctor(id, name, email, speciality, password, address, phoneNumber, birthday, sex);
-
-        return doctor;
+        return new Doctor(id, name, email, speciality, password, address, phoneNumber, birthday, sex);
     }
 
     // Convertir el cursor de la tabla de pacientes en un objeto Patient
@@ -195,4 +195,32 @@ public class AppointmentsDataSource {
         cursor.close();
         return patient;
     }
+
+    public int getDoctorIdByEmailAndPassword(String email, String password) {
+        int doctorId = -1; // Valor por defecto en caso de que no se encuentre el doctor
+
+        String[] projection = {AppointmentsDatabaseHelper.COLUMN_ID};
+        String selection = AppointmentsDatabaseHelper.COLUMN_EMAIL + " = ? AND " +
+                AppointmentsDatabaseHelper.COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = database.query(
+                AppointmentsDatabaseHelper.TABLE_DOCTORS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            doctorId = cursor.getInt(cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID));
+        }
+
+        cursor.close();
+
+        return doctorId;
+    }
+
 }

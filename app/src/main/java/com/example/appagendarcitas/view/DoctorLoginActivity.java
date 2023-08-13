@@ -52,7 +52,9 @@ public class DoctorLoginActivity extends AppCompatActivity {
         if (doctor != null) {
             Intent intent = new Intent(this, DoctorMenuActivity.class);
             intent.putExtra("doctorName", doctor.getName());
-            intent.putExtra("doctorId", doctor.getId());
+            intent.putExtra("doctorEmail", doctor.getEmail());
+            intent.putExtra("doctorPassword", doctor.getPassword());
+
             startActivity(intent);
             finish(); // Opcional: Finalizar la actividad de inicio de sesión
         } else {
