@@ -252,4 +252,35 @@ public class AppointmentsDataSource {
         return patientId;
     }
 
+    // Agregué este método para convertir el cursor en un objeto AvailableAppointment
+    public List<AvailableAppointment> getAllAvailableAppointments() {
+        List<AvailableAppointment> availableAppointments = new ArrayList<>();
+        Cursor cursor = database.query(AppointmentsDatabaseHelper.TABLE_APPOINTMENTS,
+                null, null, null, null, null, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            AvailableAppointment availableAppointment = cursorToAvailableAppointment(cursor);
+            availableAppointments.add(availableAppointment);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return availableAppointments;
+    }
+
+    private AvailableAppointment cursorToAvailableAppointment(Cursor cursor) {
+        int idIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID);
+        int dateIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DATE);
+        int timeIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_TIME);
+        int doctorIdIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID);
+
+        long id = cursor.getLong(idIndex);
+        String date = cursor.getString(dateIndex);
+        String time = cursor.getString(timeIndex);
+        int doctorId = cursor.getInt(doctorIdIndex);
+
+        return new AvailableAppointment(date, time, doctorId);
+    }
+
 }

@@ -10,6 +10,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.appagendarcitas.MainActivity;
 import com.example.appagendarcitas.R;
+import com.example.appagendarcitas.data.AppointmentsDataSource;
+import com.example.appagendarcitas.model.AvailableAppointment;
+
+import java.io.Serializable;
+import java.util.List;
 
 public class PatientMenuActivity extends AppCompatActivity {
 
@@ -27,9 +32,11 @@ public class PatientMenuActivity extends AppCompatActivity {
     }
 
     public void agendarCita(View view) {
-        // Lógica para abrir la pantalla de agendar cita
-        // Puedes crear una nueva actividad o fragmento para la funcionalidad de agendar cita
+        // Crea un Intent para abrir la pantalla de AgendarCitaActivity
+        Intent intent = new Intent(this, AgendarCitaActivity.class);
+        startActivity(intent);
     }
+
 
     public void verCitasAgendadas(View view) {
         // Lógica para abrir la pantalla de ver citas agendadas
