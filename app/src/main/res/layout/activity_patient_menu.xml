@@ -1,0 +1,90 @@
+<!-- res/layout/activity_patient_menu.xml -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvProfilePatient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="24sp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/tvPatientName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        android:layout_below="@id/tvProfilePatient"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tvSubtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Qué deseas hacer?"
+        android:textSize="18sp"
+        android:layout_below="@id/tvPatientName"
+        android:layout_centerHorizontal="true"
+        />
+
+    <ImageButton
+        android:id="@+id/btnViewAppointments"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/add_available_appointments"
+        android:layout_below="@id/tvSubtitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:onClick="agendarCita"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agendar Cita"
+        android:layout_below="@id/btnViewAppointments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <ImageButton
+        android:id="@+id/btnViewProfile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/schedule"
+        android:layout_below="@id/btnViewAppointments"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:onClick="verCitasAgendadas"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver citas agendadas"
+        android:layout_below="@id/btnViewProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <ImageButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logout"
+        android:layout_below="@id/btnViewProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:onClick="logout"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cerrar Sesión"
+        android:layout_below="@id/btnLogout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>

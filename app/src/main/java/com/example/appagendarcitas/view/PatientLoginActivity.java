@@ -50,7 +50,13 @@ public class PatientLoginActivity extends AppCompatActivity {
         Patient patient = dataSource.getPatientByEmailAndPassword(email, password);
 
         if (patient != null) {
-            showAlertDialog("Inicio de sesión exitoso", "Bienvenido " + patient.getName());
+            Intent intent = new Intent(this, PatientMenuActivity.class);
+            intent.putExtra("patientName", patient.getName());
+            intent.putExtra("patientEmail", patient.getEmail());
+            intent.putExtra("patientPassword", patient.getPassword());
+
+            startActivity(intent);
+            finish(); // Opcional: Finalizar la actividad de inicio de sesión
         } else {
             showAlertDialog("Error", "Credenciales inválidas. Verifique su correo y contraseña.");
         }

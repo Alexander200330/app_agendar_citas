@@ -196,6 +196,7 @@ public class AppointmentsDataSource {
         return patient;
     }
 
+    @SuppressLint("Range")
     public int getDoctorIdByEmailAndPassword(String email, String password) {
         int doctorId = -1; // Valor por defecto en caso de que no se encuentre el doctor
 
@@ -221,6 +222,34 @@ public class AppointmentsDataSource {
         cursor.close();
 
         return doctorId;
+    }
+
+    @SuppressLint("Range")
+    public int getPatientIdByEmailAndPassword(String email, String password) {
+        int patientId = -1;
+
+        String[] projection = {AppointmentsDatabaseHelper.COLUMN_ID};
+        String selection = AppointmentsDatabaseHelper.COLUMN_EMAIL + " = ? AND " +
+                AppointmentsDatabaseHelper.COLUMN_PASSWORD + " = ?";
+        String[] selectionArgs = {email, password};
+
+        Cursor cursor = database.query(
+                AppointmentsDatabaseHelper.TABLE_PATIENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        if (cursor.moveToFirst()) {
+            patientId = cursor.getInt(cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID));
+        }
+
+        cursor.close();
+
+        return patientId;
     }
 
 }
