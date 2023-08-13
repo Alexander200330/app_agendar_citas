@@ -283,4 +283,50 @@ public class AppointmentsDataSource {
         return new AvailableAppointment(date, time, doctorId);
     }
 
+    public Doctor getDoctorById(int doctorId) {
+        Doctor doctor = null;
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                AppointmentsDatabaseHelper.COLUMN_NAME,
+                AppointmentsDatabaseHelper.COLUMN_EMAIL,
+                AppointmentsDatabaseHelper.COLUMN_SPECIALITY,
+                AppointmentsDatabaseHelper.COLUMN_PASSWORD,
+                AppointmentsDatabaseHelper.COLUMN_ADDRESS,
+                AppointmentsDatabaseHelper.COLUMN_PHONE_NUMBER,
+                AppointmentsDatabaseHelper.COLUMN_BIRTHDAY,
+                AppointmentsDatabaseHelper.COLUMN_SEX
+        };
+        String selection = AppointmentsDatabaseHelper.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(doctorId)};
+
+        try (Cursor cursor = db.query(
+                AppointmentsDatabaseHelper.TABLE_DOCTORS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        )) {
+            if (cursor.moveToFirst()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_EMAIL));
+                String speciality = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_SPECIALITY));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_PASSWORD));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_ADDRESS));
+                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_PHONE_NUMBER));
+                String birthday = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY));
+                String sex = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_SEX));
+
+                doctor = new Doctor(doctorId, name, email, speciality, password, address, phoneNumber, birthday, sex);
+            }
+        }
+
+        return doctor;
+    }
+
+
+
 }

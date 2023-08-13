@@ -14,6 +14,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.appagendarcitas.R;
 import com.example.appagendarcitas.data.AppointmentsDataSource;
 import com.example.appagendarcitas.model.AvailableAppointment;
+import com.example.appagendarcitas.model.Doctor;
 
 import java.util.List;
 
@@ -38,26 +39,39 @@ public class AgendarCitaActivity extends AppCompatActivity {
 
     private class AppointmentListAdapter extends ArrayAdapter<AvailableAppointment> {
         private final LayoutInflater inflater;
+        private final AppointmentsDataSource dataSource;
 
         public AppointmentListAdapter(Context context, List<AvailableAppointment> appointments) {
             super(context, 0, appointments);
             inflater = LayoutInflater.from(context);
+            dataSource = new AppointmentsDataSource(context);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = inflater.inflate(android.R.layout.simple_list_item_2, parent, false);
+                convertView = inflater.inflate(R.layout.list_item_appointment, parent, false);
             }
 
             AvailableAppointment appointment = getItem(position);
 
-            TextView textView1 = convertView.findViewById(android.R.id.text1);
-            TextView textView2 = convertView.findViewById(android.R.id.text2);
+            TextView textViewDoctor = convertView.findViewById(R.id.textViewDoctor);
+            TextView textViewSpeciality = convertView.findViewById(R.id.textViewSpeciality);
+            TextView textViewDate = convertView.findViewById(R.id.textViewDate);
+            TextView textViewTime = convertView.findViewById(R.id.textViewTime);
 
-            // Personaliza cómo se muestra la información en los TextViews
-            textView1.setText("Fecha: " + appointment.getDate());
-            textView2.setText("Hora: " + appointment.getTime());
+            // Consulta la base de datos para obtener el nombre del doctor y su especialidad
+            dataSource.open();
+            Doctor doctor = dataSource.getDoctorById((int) appointment.getDoctorId());
+            dataSource.close();
+
+            if (doctor != null) {
+                textViewDoctor.setText("Nombre del doctor: " + doctor.getName());
+                textViewSpeciality.setText("Especialidad: " + doctor.getSpeciality());
+            }
+
+            textViewDate.setText("Fecha: " + appointment.getDate());
+            textViewTime.setText("Hora: " + appointment.getTime());
 
             return convertView;
         }
