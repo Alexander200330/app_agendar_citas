@@ -32,5 +32,7 @@
         <activity android:name=".view.DoctorRegistrationActivity" />
         <activity android:name=".view.PatientRegistrationActivity" />
         <activity android:name=".view.WelcomeActivity" />
+        <activity android:name=".view.DoctorMenuActivity" />
+
     </application>
 </manifest>

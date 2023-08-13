@@ -50,11 +50,16 @@ public class DoctorLoginActivity extends AppCompatActivity {
         Doctor doctor = dataSource.getDoctorByEmailAndPassword(email, password);
 
         if (doctor != null) {
-            showAlertDialog("Inicio de sesión exitoso", "Bienvenido " + doctor.getName());
+            Intent intent = new Intent(this, DoctorMenuActivity.class);
+            intent.putExtra("doctorName", doctor.getName()); // Agrega el nombre del doctor como dato extra
+            startActivity(intent);
+            finish(); // Opcional: Finalizar la actividad de inicio de sesión
         } else {
             showAlertDialog("Error", "Credenciales inválidas. Verifique su correo y contraseña.");
         }
     }
+
+
 
     public void goToDoctorRegister(View view) {
         Intent intent = new Intent(this, DoctorRegistrationActivity.class);
