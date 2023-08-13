@@ -7,6 +7,7 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.example.appagendarcitas.data.AppointmentsDatabaseHelper;
+import com.example.appagendarcitas.model.AvailableAppointment;
 import com.example.appagendarcitas.model.Doctor;
 import com.example.appagendarcitas.model.Patient;
 
@@ -100,6 +101,7 @@ public class AppointmentsDataSource {
 
     // Convertir el cursor de la tabla de doctores en un objeto Doctor
     private Doctor cursorToDoctor(Cursor cursor) {
+        int idIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID);
         int nameIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_NAME);
         int emailIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_EMAIL);
         int specialityIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_SPECIALITY);
@@ -109,6 +111,7 @@ public class AppointmentsDataSource {
         int birthdayIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY);
         int sexIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_SEX);
 
+        int id = cursor.getInt(idIndex);
         String name = cursor.getString(nameIndex);
         String email = cursor.getString(emailIndex);
         String speciality = cursor.getString(specialityIndex);
@@ -118,7 +121,7 @@ public class AppointmentsDataSource {
         String birthday = cursor.getString(birthdayIndex);
         String sex = cursor.getString(sexIndex);
 
-        Doctor doctor = new Doctor(name, email, speciality, password, address, phoneNumber, birthday, sex);
+        Doctor doctor = new Doctor(id, name, email, speciality, password, address, phoneNumber, birthday, sex);
 
         return doctor;
     }
@@ -165,6 +168,18 @@ public class AppointmentsDataSource {
         cursor.close();
         return doctor;
     }
+
+    public long insertAvailableAppointment(AvailableAppointment availableAppointment) {
+        ContentValues values = new ContentValues();
+        values.put(AppointmentsDatabaseHelper.COLUMN_DATE, availableAppointment.getDate());
+        values.put(AppointmentsDatabaseHelper.COLUMN_TIME, availableAppointment.getTime());
+        values.put(AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID, availableAppointment.getDoctorId());
+
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        return db.insert(AppointmentsDatabaseHelper.TABLE_APPOINTMENTS, null, values);
+    }
+
+    // Dentro de la clase AppointmentsDataSource
 
     public Patient getPatientByEmailAndPassword(String email, String password) {
         Patient patient = null;

@@ -11,6 +11,7 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
     // Table names
     public static final String TABLE_DOCTORS = "doctors";
     public static final String TABLE_PATIENTS = "patients";
+    public static final String TABLE_APPOINTMENTS = "appointments"; // Nueva tabla para citas disponibles
 
     // Common column names
     public static final String COLUMN_ID = "_id";
@@ -29,6 +30,11 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
     public static final String COLUMN_WEIGHT = "weight";
     public static final String COLUMN_HEIGHT = "height";
     public static final String COLUMN_BLOOD = "blood";
+
+    // Appointments table specific column names
+    public static final String COLUMN_DATE = "date";
+    public static final String COLUMN_TIME = "time";
+    public static final String COLUMN_DOCTOR_ID = "doctor_id";
 
     // Create table statements
     private static final String CREATE_TABLE_DOCTORS =
@@ -55,7 +61,15 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
                     COLUMN_PASSWORD + " TEXT, " +
                     COLUMN_ADDRESS + " TEXT, " +
                     COLUMN_PHONE_NUMBER + " TEXT, " +
-                    COLUMN_SEX + " TEXT" + // Agregamos la columna para el sexo
+                    COLUMN_SEX + " TEXT" +
+                    ");";
+    private static final String CREATE_TABLE_APPOINTMENTS =
+            "CREATE TABLE " + TABLE_APPOINTMENTS + "(" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_DATE + " TEXT, " +
+                    COLUMN_TIME + " TEXT, " +
+                    COLUMN_DOCTOR_ID + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_DOCTOR_ID + ") REFERENCES " + TABLE_DOCTORS + "(" + COLUMN_ID + ")" +
                     ");";
 
     public AppointmentsDatabaseHelper(Context context) {
@@ -66,6 +80,7 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_DOCTORS);
         db.execSQL(CREATE_TABLE_PATIENTS);
+        db.execSQL(CREATE_TABLE_APPOINTMENTS);
     }
 
     @Override

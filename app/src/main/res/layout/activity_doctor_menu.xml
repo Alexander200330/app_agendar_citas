@@ -41,7 +41,7 @@
         android:layout_below="@id/tvSubtitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:onClick="addAvailableAppointment"/>
+        android:onClick="openAddAvailableAppointmentModal"/>
 
     <TextView
         android:layout_width="wrap_content"

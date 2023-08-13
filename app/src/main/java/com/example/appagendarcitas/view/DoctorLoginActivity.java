@@ -51,7 +51,8 @@ public class DoctorLoginActivity extends AppCompatActivity {
 
         if (doctor != null) {
             Intent intent = new Intent(this, DoctorMenuActivity.class);
-            intent.putExtra("doctorName", doctor.getName()); // Agrega el nombre del doctor como dato extra
+            intent.putExtra("doctorName", doctor.getName());
+            intent.putExtra("doctorId", doctor.getId());
             startActivity(intent);
             finish(); // Opcional: Finalizar la actividad de inicio de sesión
         } else {

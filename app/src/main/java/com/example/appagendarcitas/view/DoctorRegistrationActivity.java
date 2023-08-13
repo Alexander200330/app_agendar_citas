@@ -79,6 +79,8 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
     }
 
     public void createDoctor(View view) {
+
+        int id = etDoctorName.getId();
         String name = etDoctorName.getText().toString();
         String email = etDoctorEmail.getText().toString();
         String speciality = etDoctorSpeciality.getText().toString();
@@ -92,7 +94,7 @@ public class DoctorRegistrationActivity extends AppCompatActivity {
                 address.isEmpty() || phoneNumber.isEmpty() || birthday.isEmpty() || sex.isEmpty()) {
             Toast.makeText(this, "Por favor, completa todos los campos.", Toast.LENGTH_LONG).show();
         } else {
-            Doctor newDoctor = new Doctor(name, email, speciality, password, address, phoneNumber, birthday, sex);
+            Doctor newDoctor = new Doctor(id, name, email, speciality, password, address, phoneNumber, birthday, sex);
 
             dataSource.open();
             long insertId = dataSource.insertDoctor(newDoctor);
