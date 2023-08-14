@@ -41,6 +41,7 @@
         android:layout_below="@id/tvSubtitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
         android:onClick="openAddAvailableAppointmentModal"/>
 
     <TextView
@@ -58,6 +59,7 @@
         android:src="@drawable/schedule"
         android:layout_below="@id/btnAddAppointment"
         android:layout_centerHorizontal="true"
+        android:background="@android:color/transparent"
         android:layout_marginTop="50dp"
         android:onClick="viewSchedule"/>
 
@@ -77,6 +79,7 @@
         android:layout_below="@id/btnViewSchedule"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="50dp"
+        android:background="@android:color/transparent"
         android:onClick="logout"/>
 
     <TextView

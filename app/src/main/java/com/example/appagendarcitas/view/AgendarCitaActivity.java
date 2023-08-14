@@ -66,12 +66,12 @@ public class AgendarCitaActivity extends AppCompatActivity {
             dataSource.close();
 
             if (doctor != null) {
-                textViewDoctor.setText("Nombre del doctor: " + doctor.getName());
-                textViewSpeciality.setText("Especialidad: " + doctor.getSpeciality());
+                textViewDoctor.setText(doctor.getName());
+                textViewSpeciality.setText(doctor.getSpeciality());
             }
 
-            textViewDate.setText("Fecha: " + appointment.getDate());
-            textViewTime.setText("Hora: " + appointment.getTime());
+            textViewDate.setText(appointment.getDate());
+            textViewTime.setText(appointment.getTime());
 
             return convertView;
         }

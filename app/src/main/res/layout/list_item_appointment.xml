@@ -4,27 +4,84 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/textViewDoctorTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Nombre del Doctor:"
+        android:textColor="#0B3B60" /> <!-- Cambio a un azul más oscuro -->
+
+    <TextView
         android:id="@+id/textViewDoctor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="16sp"
-        android:textStyle="bold"/>
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/textViewSpecialityTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Especialidad:"
+        android:textColor="#0B3B60"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textViewSpeciality"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:textSize="16sp"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/textViewDateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Fecha:"
+        android:textColor="#0B3B60"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textViewDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:textSize="16sp"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:id="@+id/textViewTimeTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:text="Hora:"
+        android:textColor="#0B3B60"
+        android:layout_marginTop="8dp" />
 
     <TextView
         android:id="@+id/textViewTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="14sp"/>
+        android:textSize="16sp"
+        android:layout_marginStart="8dp"
+        android:textColor="@android:color/black" />
+
+    <ImageButton
+        android:id="@+id/boton_agregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start"
+        android:src="@drawable/boton_agregar"
+        android:background="@android:color/transparent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="8dp" />
 </LinearLayout>

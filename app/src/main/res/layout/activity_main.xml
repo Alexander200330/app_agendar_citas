@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:paddingTop="20dp"
+        android:textColor="#0B3B60"
         android:text="Iniciar sesión como:"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -28,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginEnd="30dp"
             android:gravity="center">
 
             <ImageButton
@@ -35,6 +37,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_doctor"
+                android:background="@android:color/transparent"
                 android:onClick="loginDoctor" />
 
             <TextView
@@ -56,6 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/img_paciente"
+                android:background="@android:color/transparent"
                 android:onClick="loginPaciente" />
 
             <TextView

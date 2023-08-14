@@ -11,6 +11,7 @@
         android:text=""
         android:textSize="24sp"
         android:layout_centerHorizontal="true"
+        android:textColor="#0B3B60"
         android:layout_marginTop="20dp"/>
 
     <TextView
@@ -20,6 +21,7 @@
         android:text=""
         android:textSize="18sp"
         android:layout_below="@id/tvProfilePatient"
+        android:textColor="#0B3B60"
         android:layout_centerHorizontal="true"
         />
 
@@ -29,6 +31,7 @@
         android:layout_height="wrap_content"
         android:text="¿Qué deseas hacer?"
         android:textSize="18sp"
+        android:textColor="#0B3B60"
         android:layout_below="@id/tvPatientName"
         android:layout_centerHorizontal="true"
         />
@@ -41,6 +44,7 @@
         android:layout_below="@id/tvSubtitle"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
+        android:background="@android:color/transparent"
         android:onClick="agendarCita"/>
 
     <TextView
@@ -49,6 +53,7 @@
         android:text="Agendar Cita"
         android:layout_below="@id/btnViewAppointments"
         android:layout_centerHorizontal="true"
+        android:textColor="#0B3B60"
         android:layout_marginTop="5dp"/>
 
     <ImageButton
@@ -58,8 +63,10 @@
         android:src="@drawable/schedule"
         android:layout_below="@id/btnViewAppointments"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
         android:onClick="verCitasAgendadas"/>
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -67,6 +74,7 @@
         android:text="Ver citas agendadas"
         android:layout_below="@id/btnViewProfile"
         android:layout_centerHorizontal="true"
+        android:textColor="#0B3B60"
         android:layout_marginTop="5dp"/>
 
     <ImageButton
@@ -76,7 +84,8 @@
         android:src="@drawable/logout"
         android:layout_below="@id/btnViewProfile"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
+        android:background="@android:color/transparent"
         android:onClick="logout"/>
 
     <TextView
@@ -85,6 +94,7 @@
         android:text="Cerrar Sesión"
         android:layout_below="@id/btnLogout"
         android:layout_centerHorizontal="true"
+        android:textColor="#0B3B60"
         android:layout_marginTop="5dp"/>
 
 </RelativeLayout>
