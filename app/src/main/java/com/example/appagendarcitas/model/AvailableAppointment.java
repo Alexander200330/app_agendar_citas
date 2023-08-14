@@ -1,7 +1,7 @@
 package com.example.appagendarcitas.model;
 
 public class AvailableAppointment {
-    private long id;
+    private int id;
     private String date;
     private String time;
     private long doctorId; // ID del doctor asociado a la cita
@@ -12,8 +12,12 @@ public class AvailableAppointment {
         this.doctorId = doctorId;
     }
 
-    public long getId() {
+    public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDate() {

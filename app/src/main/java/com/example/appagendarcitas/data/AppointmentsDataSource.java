@@ -11,6 +11,7 @@ import com.example.appagendarcitas.data.AppointmentsDatabaseHelper;
 import com.example.appagendarcitas.model.AvailableAppointment;
 import com.example.appagendarcitas.model.Doctor;
 import com.example.appagendarcitas.model.Patient;
+import com.example.appagendarcitas.model.ScheduledAppointment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -275,7 +276,7 @@ public class AppointmentsDataSource {
         int timeIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_TIME);
         int doctorIdIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID);
 
-        long id = cursor.getLong(idIndex);
+        int id = cursor.getInt(idIndex);
         String date = cursor.getString(dateIndex);
         String time = cursor.getString(timeIndex);
         int doctorId = cursor.getInt(doctorIdIndex);
@@ -327,6 +328,59 @@ public class AppointmentsDataSource {
         return doctor;
     }
 
+    public long insertScheduledAppointment(ScheduledAppointment scheduledAppointment) {
+        ContentValues values = new ContentValues();
+        values.put(AppointmentsDatabaseHelper.COLUMN_DATE, scheduledAppointment.getDate());
+        values.put(AppointmentsDatabaseHelper.COLUMN_TIME, scheduledAppointment.getTime());
+        values.put(AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID, scheduledAppointment.getDoctorId());
+        values.put(AppointmentsDatabaseHelper.COLUMN_PATIENT_ID, scheduledAppointment.getPatientId());
 
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        long insertedRowId = db.insert(AppointmentsDatabaseHelper.TABLE_SCHEDULED_APPOINTMENTS, null, values);
+
+        if (insertedRowId != -1) {
+            // If insertion was successful, delete the appointment from the available appointments
+            String whereClause = AppointmentsDatabaseHelper.COLUMN_ID + " = ?";
+            String[] whereArgs = {String.valueOf(scheduledAppointment.getAvailableAppointmentId())};
+            db.delete(AppointmentsDatabaseHelper.TABLE_APPOINTMENTS, whereClause, whereArgs);
+        }
+
+        return insertedRowId;
+    }
+
+    // Delete an available appointment by ID
+    public void deleteAvailableAppointment(long id) {
+        database.delete(AppointmentsDatabaseHelper.TABLE_APPOINTMENTS,
+                AppointmentsDatabaseHelper.COLUMN_ID + " = ?",
+                new String[]{String.valueOf(id)});
+    }
+
+    public long getAvailableAppointmentId(String date, String time, int doctorId) {
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {AppointmentsDatabaseHelper.COLUMN_ID};
+        String selection = AppointmentsDatabaseHelper.COLUMN_DATE + " = ? AND " +
+                AppointmentsDatabaseHelper.COLUMN_TIME + " = ? AND " +
+                AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID + " = ?";
+        String[] selectionArgs = {date, time, String.valueOf(doctorId)};
+
+        long appointmentId = -1;
+
+        try (Cursor cursor = db.query(
+                AppointmentsDatabaseHelper.TABLE_APPOINTMENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        )) {
+            if (cursor.moveToFirst()) {
+                appointmentId = cursor.getLong(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_ID));
+            }
+        }
+
+        return appointmentId;
+    }
 
 }

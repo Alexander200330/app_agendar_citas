@@ -76,11 +76,28 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
+    // New table name and column names for scheduled appointments
+    public static final String TABLE_SCHEDULED_APPOINTMENTS = "citasAgendadas";
+    public static final String COLUMN_PATIENT_ID = "patient_id"; // Nuevo campo para el ID del paciente
+
+    // Create table statement for scheduled appointments
+    private static final String CREATE_TABLE_SCHEDULED_APPOINTMENTS =
+            "CREATE TABLE " + TABLE_SCHEDULED_APPOINTMENTS + "(" +
+                    COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                    COLUMN_DATE + " TEXT, " +
+                    COLUMN_TIME + " TEXT, " +
+                    COLUMN_DOCTOR_ID + " INTEGER, " +
+                    COLUMN_PATIENT_ID + " INTEGER, " +
+                    "FOREIGN KEY (" + COLUMN_DOCTOR_ID + ") REFERENCES " + TABLE_DOCTORS + "(" + COLUMN_ID + "), " +
+                    "FOREIGN KEY (" + COLUMN_PATIENT_ID + ") REFERENCES " + TABLE_PATIENTS + "(" + COLUMN_ID + ")" +
+                    ");";
+
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_TABLE_DOCTORS);
         db.execSQL(CREATE_TABLE_PATIENTS);
         db.execSQL(CREATE_TABLE_APPOINTMENTS);
+        db.execSQL(CREATE_TABLE_SCHEDULED_APPOINTMENTS); // Create the new table for scheduled appointments
     }
 
     @Override
@@ -88,3 +105,4 @@ public class AppointmentsDatabaseHelper extends SQLiteOpenHelper {
         // Handle database upgrades if needed
     }
 }
+
