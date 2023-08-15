@@ -467,5 +467,87 @@ public class AppointmentsDataSource {
         return availableAppointments;
     }
 
+    public List<ScheduledAppointment> getScheduledAppointmentsForDoctor(int doctorId) {
+        List<ScheduledAppointment> scheduledAppointments = new ArrayList<>();
+
+        String[] projection = {
+                AppointmentsDatabaseHelper.COLUMN_ID,
+                AppointmentsDatabaseHelper.COLUMN_DATE,
+                AppointmentsDatabaseHelper.COLUMN_TIME,
+                AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID,
+                AppointmentsDatabaseHelper.COLUMN_PATIENT_ID
+        };
+        String selection = AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(doctorId)};
+
+        Cursor cursor = database.query(
+                AppointmentsDatabaseHelper.TABLE_SCHEDULED_APPOINTMENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            ScheduledAppointment scheduledAppointment = cursorToScheduledAppointment(cursor);
+            scheduledAppointments.add(scheduledAppointment);
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return scheduledAppointments;
+    }
+
+    public Patient getPatientById(int patientId) {
+        Patient patient = null;
+
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                AppointmentsDatabaseHelper.COLUMN_NAME,
+                AppointmentsDatabaseHelper.COLUMN_EMAIL,
+                AppointmentsDatabaseHelper.COLUMN_BIRTHDAY,
+                AppointmentsDatabaseHelper.COLUMN_WEIGHT,
+                AppointmentsDatabaseHelper.COLUMN_HEIGHT,
+                AppointmentsDatabaseHelper.COLUMN_BLOOD,
+                AppointmentsDatabaseHelper.COLUMN_PASSWORD,
+                AppointmentsDatabaseHelper.COLUMN_ADDRESS,
+                AppointmentsDatabaseHelper.COLUMN_PHONE_NUMBER,
+                AppointmentsDatabaseHelper.COLUMN_SEX
+        };
+        String selection = AppointmentsDatabaseHelper.COLUMN_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(patientId)};
+
+        try (Cursor cursor = db.query(
+                AppointmentsDatabaseHelper.TABLE_PATIENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        )) {
+            if (cursor.moveToFirst()) {
+                String name = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_NAME));
+                String email = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_EMAIL));
+                String birthday = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_BIRTHDAY));
+                String weight = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_WEIGHT));
+                String height = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_HEIGHT));
+                String blood = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_BLOOD));
+                String password = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_PASSWORD));
+                String address = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_ADDRESS));
+                String phoneNumber = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_PHONE_NUMBER));
+                String sex = cursor.getString(cursor.getColumnIndexOrThrow(AppointmentsDatabaseHelper.COLUMN_SEX));
+
+                patient = new Patient(name, email, address, phoneNumber, password, birthday, sex, weight, height, blood);
+            }
+        }
+
+        return patient;
+    }
+
 
 }

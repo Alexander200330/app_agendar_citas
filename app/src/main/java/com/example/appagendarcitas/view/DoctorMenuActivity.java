@@ -24,6 +24,8 @@ import com.example.appagendarcitas.R;
 import com.example.appagendarcitas.data.AppointmentsDataSource;
 import com.example.appagendarcitas.model.AvailableAppointment;
 import com.example.appagendarcitas.model.Doctor;
+import com.example.appagendarcitas.model.Patient;
+import com.example.appagendarcitas.model.ScheduledAppointment;
 
 import java.util.Calendar;
 import java.util.List;
@@ -202,8 +204,34 @@ public class DoctorMenuActivity extends AppCompatActivity {
                 .show();
     }
     public void verCitasAgendadas(View view) {
+        int doctorId = dataSource.getDoctorIdByEmailAndPassword(doctorEmail, doctorPassword);
+        List<ScheduledAppointment> scheduledAppointments = dataSource.getScheduledAppointmentsForDoctor(doctorId);
 
+        if (!scheduledAppointments.isEmpty()) {
+            StringBuilder allAppointmentsText = new StringBuilder();
+            for (ScheduledAppointment appointment : scheduledAppointments) {
+                Patient patient = dataSource.getPatientById(appointment.getPatientId());
+                if (patient != null) {
+                    allAppointmentsText.append("Fecha: ").append(appointment.getDate())
+                            .append("\nHora: ").append(appointment.getTime())
+                            .append("\nNombre del Paciente: ").append(patient.getName())
+                            .append("\nSexo: ").append(patient.getSex())
+                            .append("\nNúmero de Teléfono: ").append(patient.getPhoneNumber())
+                            .append("\nDirección: ").append(patient.getAddress())
+                            .append("\nCorreo Electrónico: ").append(patient.getEmail())
+                            .append("\nTipo de Sangre: ").append(patient.getBlood())
+                            .append("\nAltura: ").append(patient.getHeight())
+                            .append("\nPeso: ").append(patient.getWeight())
+                            .append("\n\n");
+                }
+            }
+
+            showAlertDialog("Citas Agendadas", allAppointmentsText.toString());
+        } else {
+            showAlertDialog("Citas Agendadas", "No hay citas agendadas.");
+        }
     }
+
 
     public void logout(View view) {
         // Agrega aquí la lógica para la función logout
