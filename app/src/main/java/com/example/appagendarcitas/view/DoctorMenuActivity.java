@@ -160,4 +160,16 @@ public class DoctorMenuActivity extends AppCompatActivity {
         // Muestra el TimePickerDialog
         timePickerDialog.show();
     }
+
+    public void verCitasAgendadas(View view) {
+
+    }
+
+    public void logout(View view) {
+        // Agrega aquí la lógica para la función logout
+        // Por ejemplo:
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish(); // Cierra la actividad actual
+    }
 }

@@ -1,5 +1,3 @@
-<!-- res/layout/activity_doctor_menu.xml -->
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -20,8 +18,7 @@
         android:text=""
         android:textSize="18sp"
         android:layout_below="@id/tvProfileDoctor"
-        android:layout_centerHorizontal="true"
-/>
+        android:layout_centerHorizontal="true"/>
 
     <TextView
         android:id="@+id/tvSubtitle"
@@ -30,8 +27,7 @@
         android:text="¿Qué deseas hacer?"
         android:textSize="18sp"
         android:layout_below="@id/tvDoctorName"
-        android:layout_centerHorizontal="true"
-        />
+        android:layout_centerHorizontal="true"/>
 
     <ImageButton
         android:id="@+id/btnAddAppointment"
@@ -59,15 +55,34 @@
         android:src="@drawable/schedule"
         android:layout_below="@id/btnAddAppointment"
         android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
         android:background="@android:color/transparent"
-        android:layout_marginTop="50dp"
         android:onClick="viewSchedule"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver Horario"
+        android:text="Ver citas disponibles"
         android:layout_below="@id/btnViewSchedule"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"/>
+
+    <ImageButton
+        android:id="@+id/btnVerCitasAgendads"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/citas_agendadas"
+        android:layout_below="@id/btnViewSchedule"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@android:color/transparent"
+        android:onClick="verCitasAgendadas"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ver Citas Agendadas"
+        android:layout_below="@id/btnVerCitasAgendads"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
 
@@ -76,9 +91,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/logout"
-        android:layout_below="@id/btnViewSchedule"
+        android:layout_below="@id/btnVerCitasAgendads"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:background="@android:color/transparent"
         android:onClick="logout"/>
 
