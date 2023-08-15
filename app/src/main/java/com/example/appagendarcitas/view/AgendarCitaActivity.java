@@ -24,6 +24,7 @@ import java.util.List;
 public class AgendarCitaActivity extends AppCompatActivity {
 
     private AppointmentsDataSource dataSource;
+    int idPatient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,19 +77,20 @@ public class AgendarCitaActivity extends AppCompatActivity {
 
             ImageButton addButton = convertView.findViewById(R.id.boton_agregar);
 
+            // obtener el id del paciente desde el intent
+
+            idPatient = getIntent().getIntExtra("patientId", -1);
+
             ScheduledAppointment scheduledAppointment = new ScheduledAppointment(
                     appointment.getDate(),
                     appointment.getTime(),
                     (int) appointment.getDoctorId(),
-                    getPatientIdByEmailAndPassword("maria@gmail.com", "prueba")
+                    idPatient
             );
 
             // Obtengo el id de la cita disponible
             int id = (int) dataSource.getAvailableAppointmentId(appointment.getDate(), appointment.getTime(), (int) appointment.getDoctorId());
 
-            String toastMessage =
-                    "\nPatient ID: " + scheduledAppointment.getPatientId();
-            Toast.makeText(getContext(), toastMessage, Toast.LENGTH_LONG).show();
             addButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -109,7 +111,7 @@ public class AgendarCitaActivity extends AppCompatActivity {
 
             if (scheduledId != -1) {
                 refreshAppointmentList();
-                Toast.makeText(this, "Cita agendada correctamente" + id, Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Cita agendada correctamente", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "No se pudo agendar la cita", Toast.LENGTH_SHORT).show();
             }

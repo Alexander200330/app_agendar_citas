@@ -18,10 +18,14 @@ import java.util.List;
 
 public class PatientMenuActivity extends AppCompatActivity {
 
+    AppointmentsDataSource dataSource;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_patient_menu);
+
+        dataSource = new AppointmentsDataSource(this);
 
         // Obtén el nombre del paciente del Intent
         String patientName = getIntent().getStringExtra("patientName");
@@ -29,11 +33,21 @@ public class PatientMenuActivity extends AppCompatActivity {
             TextView tvProfilePatient = findViewById(R.id.tvProfilePatient);
             tvProfilePatient.setText("Perfil de " + patientName);
         }
+
+
     }
 
     public void agendarCita(View view) {
+        String patientEmail = getIntent().getStringExtra("patientEmail");
+        String patientPassword = getIntent().getStringExtra("patientPassword");
+
+        dataSource.open();
+        int patientId = dataSource.getPatientIdByEmailAndPassword(patientEmail, patientPassword);
+        dataSource.close();
+
         // Crea un Intent para abrir la pantalla de AgendarCitaActivity
         Intent intent = new Intent(this, AgendarCitaActivity.class);
+        intent.putExtra("patientId", patientId);
         startActivity(intent);
     }
 
