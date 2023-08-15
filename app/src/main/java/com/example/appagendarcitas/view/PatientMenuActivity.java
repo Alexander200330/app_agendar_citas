@@ -1,5 +1,7 @@
 package com.example.appagendarcitas.view;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +14,8 @@ import com.example.appagendarcitas.MainActivity;
 import com.example.appagendarcitas.R;
 import com.example.appagendarcitas.data.AppointmentsDataSource;
 import com.example.appagendarcitas.model.AvailableAppointment;
+import com.example.appagendarcitas.model.Doctor;
+import com.example.appagendarcitas.model.ScheduledAppointment;
 
 import java.io.Serializable;
 import java.util.List;
@@ -53,9 +57,42 @@ public class PatientMenuActivity extends AppCompatActivity {
 
 
     public void verCitasAgendadas(View view) {
-        // Lógica para abrir la pantalla de ver citas agendadas
-        // Puedes crear una nueva actividad o fragmento para la funcionalidad de ver citas agendadas
+        String patientEmail = getIntent().getStringExtra("patientEmail");
+        String patientPassword = getIntent().getStringExtra("patientPassword");
+
+        dataSource.open();
+        int patientId = dataSource.getPatientIdByEmailAndPassword(patientEmail, patientPassword);
+
+        // Obtener la lista de citas agendadas para el paciente
+        List<ScheduledAppointment> scheduledAppointments = dataSource.getScheduledAppointmentsForPatient(patientId);
+
+        StringBuilder appointmentsText = new StringBuilder();
+        for (ScheduledAppointment appointment : scheduledAppointments) {
+            Doctor doctor = dataSource.getDoctorById(appointment.getDoctorId());
+
+            appointmentsText.append("Doctor: ").append(doctor.getName())
+                    .append("\nEspecialidad: ").append(doctor.getSpeciality())
+                    .append("\nFecha: ").append(appointment.getDate())
+                    .append("\nHora: ").append(appointment.getTime())
+
+                    .append("\n\n");
+        }
+
+        // Mostrar las citas agendadas con los detalles del doctor en un AlertDialog
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Citas Agendadas")
+                .setMessage(appointmentsText.toString())
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
+
+
 
     public void logout(View view) {
         // Lógica para realizar el logout

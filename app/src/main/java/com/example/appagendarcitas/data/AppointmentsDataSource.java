@@ -383,4 +383,56 @@ public class AppointmentsDataSource {
         return appointmentId;
     }
 
+    public List<ScheduledAppointment> getScheduledAppointmentsForPatient(int patientId) {
+        List<ScheduledAppointment> scheduledAppointments = new ArrayList<>();
+        SQLiteDatabase db = dbHelper.getReadableDatabase();
+
+        String[] projection = {
+                AppointmentsDatabaseHelper.COLUMN_ID,
+                AppointmentsDatabaseHelper.COLUMN_DATE,
+                AppointmentsDatabaseHelper.COLUMN_TIME,
+                AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID,
+                AppointmentsDatabaseHelper.COLUMN_PATIENT_ID
+        };
+        String selection = AppointmentsDatabaseHelper.COLUMN_PATIENT_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(patientId)};
+
+        try (Cursor cursor = db.query(
+                AppointmentsDatabaseHelper.TABLE_SCHEDULED_APPOINTMENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        )) {
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                ScheduledAppointment scheduledAppointment = cursorToScheduledAppointment(cursor);
+                scheduledAppointments.add(scheduledAppointment);
+                cursor.moveToNext();
+            }
+        }
+
+        return scheduledAppointments;
+    }
+
+    private ScheduledAppointment cursorToScheduledAppointment(Cursor cursor) {
+        int idIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_ID);
+        int dateIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DATE);
+        int timeIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_TIME);
+        int doctorIdIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID);
+        int patientIdIndex = cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_PATIENT_ID);
+
+        int id = cursor.getInt(idIndex);
+        String date = cursor.getString(dateIndex);
+        String time = cursor.getString(timeIndex);
+        int doctorId = cursor.getInt(doctorIdIndex);
+        int patientId = cursor.getInt(patientIdIndex);
+
+        return new ScheduledAppointment(date, time, doctorId, patientId);
+    }
+
+
+
 }
