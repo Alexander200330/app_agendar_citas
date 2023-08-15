@@ -33,6 +33,7 @@
         <activity android:name=".view.DoctorMenuActivity" />
         <activity android:name=".view.PatientMenuActivity" />
         <activity android:name=".view.AgendarCitaActivity" />
+        <activity android:name=".view.ScheduledAppointmentsActivity" />
 
 
 

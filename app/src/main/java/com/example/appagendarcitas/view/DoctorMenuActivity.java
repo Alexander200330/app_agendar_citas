@@ -27,6 +27,7 @@ import com.example.appagendarcitas.model.Doctor;
 import com.example.appagendarcitas.model.Patient;
 import com.example.appagendarcitas.model.ScheduledAppointment;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
@@ -208,29 +209,38 @@ public class DoctorMenuActivity extends AppCompatActivity {
         List<ScheduledAppointment> scheduledAppointments = dataSource.getScheduledAppointmentsForDoctor(doctorId);
 
         if (!scheduledAppointments.isEmpty()) {
-            StringBuilder allAppointmentsText = new StringBuilder();
+            // Crear un Intent para iniciar el nuevo Activity
+            Intent intent = new Intent(this, ScheduledAppointmentsActivity.class);
+
+            // Crear un ArrayList para almacenar los detalles de las citas agendadas
+            ArrayList<String> appointmentDetails = new ArrayList<>();
             for (ScheduledAppointment appointment : scheduledAppointments) {
                 Patient patient = dataSource.getPatientById(appointment.getPatientId());
                 if (patient != null) {
-                    allAppointmentsText.append("Fecha: ").append(appointment.getDate())
-                            .append("\nHora: ").append(appointment.getTime())
-                            .append("\nNombre del Paciente: ").append(patient.getName())
-                            .append("\nSexo: ").append(patient.getSex())
-                            .append("\nNúmero de Teléfono: ").append(patient.getPhoneNumber())
-                            .append("\nDirección: ").append(patient.getAddress())
-                            .append("\nCorreo Electrónico: ").append(patient.getEmail())
-                            .append("\nTipo de Sangre: ").append(patient.getBlood())
-                            .append("\nAltura: ").append(patient.getHeight())
-                            .append("\nPeso: ").append(patient.getWeight())
-                            .append("\n\n");
+                    String appointmentInfo = "Fecha: " + appointment.getDate() +
+                            "\nHora: " + appointment.getTime() +
+                            "\nNombre del Paciente: " + patient.getName() +
+                            "\nSexo: " + patient.getSex() +
+                            "\nNúmero de Teléfono: " + patient.getPhoneNumber() +
+                            "\nDirección: " + patient.getAddress() +
+                            "\nCorreo Electrónico: " + patient.getEmail() +
+                            "\nTipo de Sangre: " + patient.getBlood() +
+                            "\nAltura: " + patient.getHeight() +
+                            "\nPeso: " + patient.getWeight() + "\n\n";
+                    appointmentDetails.add(appointmentInfo);
                 }
             }
 
-            showAlertDialog("Citas Agendadas", allAppointmentsText.toString());
+            // Pasar los detalles de las citas agendadas como extras en el Intent
+            intent.putStringArrayListExtra("appointmentDetails", appointmentDetails);
+
+            // Iniciar el nuevo Activity
+            startActivity(intent);
         } else {
             showAlertDialog("Citas Agendadas", "No hay citas agendadas.");
         }
     }
+
 
 
     public void logout(View view) {
