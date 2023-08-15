@@ -49,7 +49,7 @@
         android:layout_marginTop="5dp"/>
 
     <ImageButton
-        android:id="@+id/btnViewSchedule"
+        android:id="@+id/btnVerCitasDisponibles"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/schedule"
@@ -57,13 +57,13 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@android:color/transparent"
-        android:onClick="viewSchedule"/>
+        android:onClick="verCitasDisponibles"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Ver citas disponibles"
-        android:layout_below="@id/btnViewSchedule"
+        android:layout_below="@id/btnVerCitasDisponibles"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"/>
 
@@ -72,7 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/citas_agendadas"
-        android:layout_below="@id/btnViewSchedule"
+        android:layout_below="@id/btnVerCitasDisponibles"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:background="@android:color/transparent"

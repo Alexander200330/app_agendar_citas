@@ -433,6 +433,39 @@ public class AppointmentsDataSource {
         return new ScheduledAppointment(date, time, doctorId, patientId);
     }
 
+    public List<AvailableAppointment> getAllAvailableAppointmentsForDoctor(String doctorEmail, String doctorPassword) {
+        int doctorId = getDoctorIdByEmailAndPassword(doctorEmail, doctorPassword);
+        return getAllAvailableAppointmentsForDoctorId(doctorId);
+    }
+
+    public List<AvailableAppointment> getAllAvailableAppointmentsForDoctorId(int doctorId) {
+        List<AvailableAppointment> availableAppointments = new ArrayList<>();
+
+        String[] projection = {AppointmentsDatabaseHelper.COLUMN_DATE, AppointmentsDatabaseHelper.COLUMN_TIME};
+        String selection = AppointmentsDatabaseHelper.COLUMN_DOCTOR_ID + " = ?";
+        String[] selectionArgs = {String.valueOf(doctorId)};
+
+        Cursor cursor = database.query(
+                AppointmentsDatabaseHelper.TABLE_APPOINTMENTS,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            @SuppressLint("Range") String date = cursor.getString(cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_DATE));
+            @SuppressLint("Range") String time = cursor.getString(cursor.getColumnIndex(AppointmentsDatabaseHelper.COLUMN_TIME));
+            availableAppointments.add(new AvailableAppointment(date, time, doctorId));
+            cursor.moveToNext();
+        }
+
+        cursor.close();
+        return availableAppointments;
+    }
 
 
 }

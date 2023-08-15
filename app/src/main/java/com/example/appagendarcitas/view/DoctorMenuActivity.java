@@ -3,13 +3,16 @@ package com.example.appagendarcitas.view;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,6 +26,7 @@ import com.example.appagendarcitas.model.AvailableAppointment;
 import com.example.appagendarcitas.model.Doctor;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class DoctorMenuActivity extends AppCompatActivity {
 
@@ -58,6 +62,14 @@ public class DoctorMenuActivity extends AppCompatActivity {
 
         dataSource = new AppointmentsDataSource(this);
         dataSource.open();
+
+        ImageButton btnVerCitasDisponibles = findViewById(R.id.btnVerCitasDisponibles);
+        btnVerCitasDisponibles.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verCitasDisponibles(v);
+            }
+        });
     }
 
     public void openAddAvailableAppointmentModal(View view) {
@@ -161,6 +173,34 @@ public class DoctorMenuActivity extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    public void verCitasDisponibles(View view) {
+        List<AvailableAppointment> availableAppointments = dataSource.getAllAvailableAppointmentsForDoctor(doctorEmail, doctorPassword);
+
+        if (!availableAppointments.isEmpty()) {
+            StringBuilder allAppointmentsText = new StringBuilder();
+            for (AvailableAppointment appointment : availableAppointments) {
+                allAppointmentsText.append("Fecha: ").append(appointment.getDate())
+                        .append("\nHora: ").append(appointment.getTime())
+                        .append("\n\n");
+            }
+
+            showAlertDialog("Citas Disponibles", allAppointmentsText.toString());
+        } else {
+            showAlertDialog("Citas Disponibles", "No hay citas disponibles.");
+        }
+    }
+    private void showAlertDialog(String title, String message) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle(title)
+                .setMessage(message)
+                .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                })
+                .show();
+    }
     public void verCitasAgendadas(View view) {
 
     }
